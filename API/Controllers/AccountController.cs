@@ -32,11 +32,9 @@ namespace API.Controllers
             {
                 return Unauthorized("Invalid username");
             }
-            using var hmac = new HMACSHA512(user.PaswordSalt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-            for (int i = 0; i < computedHash.Length; i++)
+            if(user.IsPasswordMatched(loginDto.Password) == false)
             {
-                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
+                return Unauthorized("Invalid Password");
             }
             return new UserDto
             {
