@@ -14,18 +14,19 @@ namespace API.Services
 {
     public class TokenService : ITokenService
     {
-        private readonly SymmetricSecurityKey _key;
+        private readonly SymmetricSecurityKey Key;
         public TokenService(IConfiguration config)
         {
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
+            Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
         public string CreateToken(AppUser user)
         {
+            Console.WriteLine($"Current Symmetric key:{Key}");
             var claims = new List<Claim> 
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
             };
-            var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            var cred = new SigningCredentials(Key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor{
                 Subject = new ClaimsIdentity(claims),

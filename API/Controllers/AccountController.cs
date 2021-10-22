@@ -8,6 +8,7 @@ using API.Data;
 using API.DTOs;
 using API.Interfaces;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -60,6 +61,7 @@ namespace API.Controllers
                 };
                 Context.Users.Add(user);
                 await Context.SaveChangesAsync();
+
                 return new UserDto {
                     UserName = user.UserName,
                     Token = TokenService.CreateToken(user)

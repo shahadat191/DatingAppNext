@@ -1,13 +1,5 @@
+<app-nav></app-nav>
 
-<table id = "customers">
-  <tr>
-    <th>Id</th>
-    <th>User Name</th>
-    <th>Password</th>
-  </tr>
-  <tr *ngFor = "let user of users">
-    <td>{{user.id}}</td>
-    <td>{{user.userName}}</td>
-    <td>{{user.passwordHash}}</td>
-  </tr>
-</table>
+<div class="container" style="margin-top: 100px;">
+  <router-outlet></router-outlet>
+</div>
