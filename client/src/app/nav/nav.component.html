@@ -13,6 +13,9 @@
                         <a class="nav-link" routerLink='/messages' routerLinkActive='active'>Messages</a>
                     </li>
                 </ng-container>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink='/errors' routerLinkActive='active'>Errors</a>
+                    </li>
             </ul>
 
             <div class="dropdown" *ngIf = "(accountService.currentUser$ | async) as user" dropdown>
@@ -33,7 +36,7 @@
                     [(ngModel)]="model.userName"
                     class="form-control me-2" 
                     type="text" 
-                    placeholder="UserName">
+                    placeholder="User name">
                 <input 
                     name ="password"
                     [(ngModel)] = "model.password"

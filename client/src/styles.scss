@@ -3,7 +3,7 @@
 /* Importing Bootstrap SCSS file. */
 /* Importing Datepicker SCSS file. */
 @import "~ngx-bootstrap/datepicker/bs-datepicker";
-
 @import "~bootswatch/dist/darkly/variables";
 @import "~bootstrap/scss/bootstrap";
+@import '~ngx-toastr/toastr';
 @import "~bootswatch/dist/darkly/bootswatch";

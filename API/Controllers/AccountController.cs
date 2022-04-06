@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
+using API.Extensions;
 using API.Interfaces;
 using API.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -51,22 +52,21 @@ namespace API.Controllers
             {
                 return BadRequest("Username is taken");
             }
-            using (var hmac = new HMACSHA512())
-            {
-                var user = new AppUser
-                {
-                    UserName = registerDto.UserName.ToLower(),
-                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                    PaswordSalt = hmac.Key
-                };
-                Context.Users.Add(user);
-                await Context.SaveChangesAsync();
 
-                return new UserDto {
-                    UserName = user.UserName,
-                    Token = TokenService.CreateToken(user)
-                };
-            }
+            var user = new AppUser
+            {
+                UserName = registerDto.UserName.ToLower()
+            };
+            (user.PasswordHash, user.PaswordSalt) = user.GetPasswordInfo(registerDto.Password);
+            Context.Users.Add(user);
+            await Context.SaveChangesAsync();
+
+            return new UserDto 
+            {
+                UserName = user.UserName,
+                Token = TokenService.CreateToken(user)
+            };
+            
         }
         private async Task<bool> UserExists(string userName)
         {
